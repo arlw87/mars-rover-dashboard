@@ -3,16 +3,25 @@
 * {
 }
 
-body {
-  background-color: black;
+#root {
   height: 100vh;
   min-height: 748px;
-  background-image: url(./../images/marsSpace.jpg);
-  background-repeat: no-repeat;
-  background-position: 50% 10%;
   font-family: "Agency FB", arial;
-  background-size: contain;
+}
+
+#rover-page {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url(./../images/marsGround.jpg);
+  background-repeat: no-repeat;
+  /* background-position: 50% 10%; */
+  height: 100%;
   background-size: cover;
+}
+
+.page {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -25,11 +34,17 @@ nav {
 }
 
 nav div {
-  /* border: 2px #c4c4c4 solid; */
   width: 90%;
-  color: #c4c4c4;
   margin: 20px 0 0 0;
   text-align: center;
+}
+
+.grey {
+  color: #c4c4c4;
+}
+
+.red {
+  color: red;
 }
 
 #nav-section-Home {

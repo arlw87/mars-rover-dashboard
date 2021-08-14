@@ -1,5 +1,6 @@
 //create a single global state object
 const store = Immutable.Map({
+    page: 'rover',
     rover: 'Spirit',
     pageBackground: './Assets/images/marsGround.jpg'
 });
@@ -9,14 +10,19 @@ const store = Immutable.Map({
 var root = document.getElementById('root');
 
 const App = (state) => {
-    return `<div id="rover-page">
-            ${menu()}
+    return `<div id="rover-page" class="page">
+            ${menu(state)}
             ${header(state)}
             </div>`
 }
 
-const menu = () => {
-    return `<nav>
+const menu = (state) => {
+    //determine nav text color
+    let colorClass = 'red';
+    if (state.get('page') !== 'rover'){
+        colorClass = 'grey';
+    } 
+    return `<nav class=${colorClass} >
     ${navSection('Home')}
     ${navSection('Mars')}
     ${navSection('info')}
