@@ -11,8 +11,8 @@ body {
   background-repeat: no-repeat;
   background-position: 50% 10%;
   font-family: "Agency FB", arial;
-  /* background-size: contain; */
-  /* background-size: cover; */
+  background-size: contain;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -29,14 +29,14 @@ nav div {
   width: 90%;
   color: #c4c4c4;
   margin: 20px 0 0 0;
+  text-align: center;
 }
 
-#nav-section-1 {
+#nav-section-Home {
   display: none;
 }
 
-#nav-section-2 {
-  text-align: center;
+#nav-section-Mars {
   font-size: 2.5rem;
   font-family: "Orbitron", sans-serif;
   border-style: solid;
@@ -45,7 +45,7 @@ nav div {
   letter-spacing: 1rem;
 }
 
-#nav-section-3 {
+#nav-section-info {
   display: none;
 }
 
@@ -65,4 +65,51 @@ nav div {
 #mars-question {
   color: #616161;
   font-size: 2rem;
+}
+
+/* Rover card section */
+
+#rovers {
+  width: 100%;
+  margin: 2rem 0 0 0;
+  /* height: 1200px; */
+}
+
+.rover-card {
+  color: #ededed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ededed;
+  margin: 0 0 1px 0;
+  height: 250px;
+  font-size: 2rem;
+}
+
+#spirit {
+  background-image: url(./../images/spirit.jpg);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+}
+
+#opportunity {
+  background-image: url(./../images/opportunity.jpg);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+}
+
+#perservance {
+  background-image: url(./../images/perservance.jpg);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+}
+
+#spirit {
+  background-image: url(./../images/spirit.jpg);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
 }
