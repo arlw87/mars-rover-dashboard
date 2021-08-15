@@ -42,7 +42,7 @@ nav {
   width: 100%;
 }
 
-#nav-section-info {
+#nav-section-Info {
   display: none;
 }
 
@@ -215,7 +215,7 @@ nav {
     width: 80%;
   }
 
-  #nav-section-info {
+  #nav-section-Info {
     display: flex;
     width: 10%;
     flex-direction: column;
@@ -223,7 +223,7 @@ nav {
     text-align: right;
   }
 
-  #nav-section-info h1 {
+  #nav-section-Info h1 {
     font-size: 3rem;
     font-weight: 500;
   }

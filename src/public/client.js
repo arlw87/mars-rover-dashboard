@@ -1,5 +1,5 @@
 //create a single global state object
-const store = Immutable.Map({
+let store = Immutable.Map({
     page: 'rover',
     rover: 'Spirit',
     pageBackground: './Assets/images/marsGround.jpg',
@@ -8,7 +8,12 @@ const store = Immutable.Map({
         landingDate: '21/05/1998',
         missionStatus: 'Complete'
     }),
-    roverImages: Immutable.List(['marsGround', 'marsSpace', 'Opportunity', 'perservance', 'spirit'])
+    roverImages: Immutable.List(['marsGround', 'marsSpace', 'Opportunity', 'perservance', 'spirit']),
+    menuItems: Immutable.Map({
+        homeLink: 'Home',
+        marsLink: 'Mars',
+        infoLink: 'Info'
+    })
 });
 
 //create commponents
@@ -26,10 +31,17 @@ const App = (state) => {
 
 const menu = (state) => {
     return `<nav class=${navColorStyling(state)} >
-    ${navSection('Home')}
-    ${navSection('Mars')}
-    ${navSection('info')}
+        ${navSection(state.get('menuItems').get('homeLink'))}
+        ${navSection(state.get('menuItems').get('marsLink'))}
+        ${navSection(state.get('menuItems').get('infoLink'))}
     </nav>`
+
+}
+
+const navSection = (title) => {
+    return `<div id="nav-section-${title}" class="nav-section">
+                <h1>${title}</h1>
+            </div>`
 }
 
 /**
@@ -58,11 +70,7 @@ const getRoverImage = (state) => {
     return `./Assets/images/${state.get('rover')}.jpg`
 }
 
-const navSection = (title) => {
-    return `<div id="nav-section-${title}" class="nav-section">
-                <h1>${title}</h1>
-            </div>`
-}
+
 
 //Facts section
 const facts = (state) => {
@@ -105,13 +113,34 @@ const imageElement = (image) => {
     return `<img class ='galleryImage' src='./Assets/images/${image}.jpg'>`
 }
 
-
 //render the webpage
 //not a pure function as it edits root
 const render = (root, state) => {
-    root.innerHTML= App(state);
+    console.log(store);
+    root.innerHTML = App(state);
 }
 
 window.addEventListener('load', () => {
     render(root, store)
+    console.log(`nav-section-${store.get('menuItems').get('homeLink')}`);
+
+    let homeButton = document.getElementById(`nav-section-${store.get('menuItems').get('homeLink')}`);
+
+    homeButton.addEventListener('click', (event) => {
+            //edit store so page indicates home 
+            updateStore({'page':'home'}, store);
+        }
+    )
  })
+
+//updating the application data and re-rendering
+const updateStore = (newState, state) => {
+    store = state.merge(newState);
+    render(root, store);
+}
+
+
+ //interacting with the page
+ //Going to home page
+
+
