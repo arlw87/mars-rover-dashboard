@@ -59,7 +59,7 @@ const getRoverImage = (state) => {
 }
 
 const navSection = (title) => {
-    return `<div id="nav-section-${title}">
+    return `<div id="nav-section-${title}" class="nav-section">
                 <h1>${title}</h1>
             </div>`
 }
@@ -85,6 +85,7 @@ const oneFact = (label) => {
     return (fact) => {
         return `<div class='fact'>
                     <h2 class='label'>${label}:</h2>
+                    <t>
                     <h2 class='detail'>${fact}</h2>
                 </div>`
     } 

@@ -5,7 +5,6 @@
 /**********************/
 
 #root {
-  height: 100vh;
   min-height: 748px;
   font-family: "Agency FB", arial;
 }
@@ -18,13 +17,9 @@
 
 nav {
   display: flex;
-  width: 100vw;
+  width: 90vw;
   justify-content: center;
-}
-
-nav div {
-  width: 90%;
-  margin: 20px 0 0 0;
+  margin: 20px auto 0 auto;
   text-align: center;
 }
 
@@ -43,14 +38,18 @@ nav div {
 #nav-section-Mars {
   font-size: 2.5rem;
   font-family: "Orbitron", sans-serif;
-  border-style: solid;
-  border-width: 3px 0;
-  border-color: #c4c4c4;
   letter-spacing: 1rem;
+  width: 100%;
 }
 
 #nav-section-info {
   display: none;
+}
+
+.nav-section {
+  border-style: solid;
+  border-width: 3px 0;
+  border-color: #c4c4c4;
 }
 
 /**********************/
@@ -185,4 +184,86 @@ nav div {
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
+}
+
+/* Responsive Design */
+@media (min-width: 1024px) {
+  /*rover page*/
+  #rover-page {
+    background-repeat: no-repeat;
+    background-position: 0% 0%;
+    height: 100%;
+    background-size: cover;
+  }
+
+  /*nav menu*/
+  #nav-section-Home {
+    display: flex;
+    width: 10%;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+  }
+
+  #nav-section-Home h1 {
+    font-size: 3rem;
+    font-weight: 500;
+  }
+
+  #nav-section-Mars {
+    font-size: 3.5rem;
+    width: 80%;
+  }
+
+  #nav-section-info {
+    display: flex;
+    width: 10%;
+    flex-direction: column;
+    justify-content: center;
+    text-align: right;
+  }
+
+  #nav-section-info h1 {
+    font-size: 3rem;
+    font-weight: 500;
+  }
+
+  /* heading section */
+
+  .header-section {
+    text-align: center;
+  }
+
+  .header-image {
+    width: 50%;
+    max-width: 500px;
+  }
+
+  .header-title {
+    font-size: 4.5rem;
+    font-weight: 500;
+  }
+
+  .section {
+    margin: 0 0 0 0;
+  }
+
+  /* fact section */
+
+  .fact {
+    flex-direction: row;
+    text-align: center;
+    margin: 1rem auto;
+    justify-content: space-between;
+    width: 400px;
+  }
+
+  .label {
+    font-size: 2rem;
+  }
+
+  .detail {
+    font-size: 3rem;
+    justify-self: flex-start;
+  }
 }
