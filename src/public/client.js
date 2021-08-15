@@ -7,7 +7,8 @@ const store = Immutable.Map({
         launchDate: '21/05/1998',
         landingDate: '21/05/1998',
         missionStatus: 'Complete'
-    })
+    }),
+    roverImages: Immutable.List(['marsGround', 'marsSpace', 'Opportunity', 'perservance', 'spirit'])
 });
 
 //create commponents
@@ -19,6 +20,7 @@ const App = (state) => {
             ${menu(state)}
             ${header(state)}
             ${facts(state)}
+            ${images(state)}
             </div>`
 }
 
@@ -88,6 +90,19 @@ const oneFact = (label) => {
     } 
 }
 
+//image / gallery section
+const images = (state) => {
+    const roverImagesArray = state.get('roverImages').toJS();
+    return `
+        <section class='section'>
+            ${roverImagesArray.map((val) => imageElement(val))}
+        </section>
+    `
+}
+
+const imageElement = (image) => {
+    return `<img class ='galleryImage' src='./Assets/images/${image}.jpg'>`
+}
 
 
 //render the webpage
