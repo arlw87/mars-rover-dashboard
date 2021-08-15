@@ -1,7 +1,7 @@
 //create a single global state object
 let store = Immutable.Map({
-    page: 'rover',
-    rover: 'Spirit',
+    page: 'home',
+    currentRover: 'Spirit',
     pageBackground: './Assets/images/marsGround.jpg',
     roverFacts: Immutable.Map({
         launchDate: '21/05/1998',
@@ -22,7 +22,6 @@ let store = Immutable.Map({
 var root = document.getElementById('root');
 
 const App = (state) => {
-    console.log(state.get('page'));
     if (state.get('page') === 'rover'){
         return roverPage(state);
     }
@@ -71,13 +70,13 @@ const navColorStyling = (state) => {
 
 const header = (state) => {
     return `<section class='header-section section'>
-                <h1 class='header-title'>${state.get('rover')}</h1>
+                <h1 class='header-title'>${state.get('currentRover')}</h1>
                 <img alt= 'image of a rover' src='${getRoverImage(state)}' class='header-image'>
             </section>`
 }
 
 const getRoverImage = (state) => {
-    return `./Assets/images/${state.get('rover')}.jpg`
+    return `./Assets/images/${state.get('currentRover')}.jpg`
 }
 
 
@@ -160,22 +159,20 @@ const roverCard = (rover) => {
             </div>`
 }
 
-// const roverLink = (rover) => {
-//     return ()
-// }
-
 
 //render the webpage
 //not a pure function as it edits root
 const render = (root, state) => {
-    console.log(store);
     root.innerHTML = App(state);
 }
 
 window.addEventListener('load', () => {
     render(root, store)
-    console.log(`nav-section-${store.get('menuItems').get('homeLink')}`);
+    loadNavLinks();
+    loadHomeRoverLinks();
+  })
 
+ const loadNavLinks = () => {
     let homeButton = document.getElementById(`nav-section-${store.get('menuItems').get('homeLink')}`);
 
     homeButton.addEventListener('click', (event) => {
@@ -183,13 +180,50 @@ window.addEventListener('load', () => {
             updateStore({'page':'home'}, store);
         }
     )
- })
+ }
+
+ const loadHomeRoverLinks = () => {
+
+    const curosityLink = document.getElementById('Curosity');
+    const spiritLink = document.getElementById('Spirit');
+    const opportunityLink = document.getElementById('Opportunity');
+    const perservanceLink = document.getElementById('Perservance');
+
+    const roverLinks = (rover) => {
+        return (event) => {
+            updateStore({'page':'rover', 'currentRover':`${rover}`}, store);
+        }
+    }
+
+    const curosityAction = roverLinks('Curosity')
+    const spiritAction = roverLinks('Spirit')
+    const opportunityAction = roverLinks('Opportunity')
+    const perservanceAction = roverLinks('Perservance')
+ 
+    curosityLink.addEventListener('click', curosityAction);
+    spiritLink.addEventListener('click', spiritAction);
+    opportunityLink.addEventListener('click', opportunityAction);
+    perservanceLink.addEventListener('click', perservanceAction);
+ }
 
 //updating the application data and re-rendering
 const updateStore = (newState, state) => {
     store = state.merge(newState);
     render(root, store);
+
+    //if the update occurred because a new page was accessed then links 
+    //will need to be re-established
+    if ('page' in newState){
+        updateUILinks(newState['page'])
+    }
 }
+
+const updateUILinks = (newPage) => {
+    if (newPage === 'home'){
+        loadHomeRoverLinks();
+    }
+    loadNavLinks();
+} 
 
 
  //interacting with the page
