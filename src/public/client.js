@@ -13,7 +13,8 @@ let store = Immutable.Map({
         homeLink: 'Home',
         marsLink: 'Mars',
         infoLink: 'Info'
-    })
+    }),
+    rovers: Immutable.List(['Curosity','Spirit','Perservance','Opportunity'])
 });
 
 //create commponents
@@ -21,11 +22,20 @@ let store = Immutable.Map({
 var root = document.getElementById('root');
 
 const App = (state) => {
+    console.log(state.get('page'));
+    if (state.get('page') === 'rover'){
+        return roverPage(state);
+    }
+    return homePage(state);
+
+}
+
+const roverPage = (state) => {
     return `<div id="rover-page" class="page">
-            ${menu(state)}
-            ${header(state)}
-            ${facts(state)}
-            ${images(state)}
+                ${menu(state)}
+                ${header(state)}
+                ${facts(state)}
+                ${images(state)}
             </div>`
 }
 
@@ -112,6 +122,48 @@ const images = (state) => {
 const imageElement = (image) => {
     return `<img class ='galleryImage' src='./Assets/images/${image}.jpg'>`
 }
+
+//Home Page Components
+const homePage = (state) => {
+    return `<div id="home-page" class="page">
+                ${menu(state)}
+                ${announcement(state)}
+                ${roverLinks(state)}
+            </div>`
+}
+
+const announcement = (state) => {
+    return `<section id="announcement" class='section'>
+                <p id="mars-statement">The red planet has been explored by robots for decades</p>
+                <p id="mars-question">Want to find out more?</p>
+            </section>`
+}
+
+/**
+ * Function uses a Reduce method on the array
+ * this adds all the roverCard elements into one htmlString
+ * By starting with an initial value of "" you can apply roverCard
+ * function to each element in the array
+ * @param {} state 
+ * @returns 
+ */
+const roverLinks = (state) => {
+    const roversArray = state.get('rovers').toJS();     
+    return `<section id='rovers'>
+    ${roversArray.reduce((acc, curr) => `${acc} ${roverCard(curr)}`,"")}
+    </section>`
+}
+
+const roverCard = (rover) => {
+    return `<div class="rover-card" id="${rover}">
+                <h3>${rover}</h3>
+            </div>`
+}
+
+// const roverLink = (rover) => {
+//     return ()
+// }
+
 
 //render the webpage
 //not a pure function as it edits root

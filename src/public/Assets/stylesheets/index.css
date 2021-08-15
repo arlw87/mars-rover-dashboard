@@ -123,6 +123,15 @@ nav {
 /* Home page styling */
 /**********************/
 
+#home-page {
+  background-color: #000;
+  background-image: url(./../images/marsSpace.jpg);
+  background-repeat: no-repeat;
+  /* background-position: 50% 10%; */
+  height: 100vh;
+  background-size: cover;
+}
+
 #announcement {
   margin: 4rem auto 0 auto;
   width: 90%;
@@ -158,28 +167,28 @@ nav {
   font-size: 2rem;
 }
 
-#spirit {
+#Spirit {
   background-image: url(./../images/spirit.jpg);
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
 }
 
-#opportunity {
+#Opportunity {
   background-image: url(./../images/opportunity.jpg);
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
 }
 
-#perservance {
+#Perservance {
   background-image: url(./../images/perservance.jpg);
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
 }
 
-#spirit {
+#Spirit {
   background-image: url(./../images/spirit.jpg);
   background-repeat: no-repeat;
   background-position: top;
