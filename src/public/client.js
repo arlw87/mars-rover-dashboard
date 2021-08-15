@@ -4,8 +4,8 @@ const store = Immutable.Map({
     rover: 'Spirit',
     pageBackground: './Assets/images/marsGround.jpg',
     roverFacts: Immutable.Map({
-        launchDate: 'unknown',
-        landingDate: 'unknown2',
+        launchDate: '21/05/1998',
+        landingDate: '21/05/1998',
         missionStatus: 'Complete'
     })
 });
@@ -18,6 +18,7 @@ const App = (state) => {
     return `<div id="rover-page" class="page">
             ${menu(state)}
             ${header(state)}
+            ${facts(state)}
             </div>`
 }
 
@@ -45,7 +46,7 @@ const navColorStyling = (state) => {
 }
 
 const header = (state) => {
-    return `<section class='header-section'>
+    return `<section class='header-section section'>
                 <h1 class='header-title'>${state.get('rover')}</h1>
                 <img alt= 'image of a rover' src='${getRoverImage(state)}' class='header-image'>
             </section>`
@@ -60,6 +61,34 @@ const navSection = (title) => {
                 <h1>${title}</h1>
             </div>`
 }
+
+//Facts section
+const facts = (state) => {
+    const launch = oneFact('Launch Date');
+    const landing = oneFact('Landing Date');
+    const missionStatus = oneFact('Mission Status');
+    return `<div id='fact-section' class='section'>
+                ${launch(state.get('roverFacts').get('launchDate'))}
+                ${landing(state.get('roverFacts').get('landingDate'))}
+                ${missionStatus(state.get('roverFacts').get('missionStatus'))}
+            </div>`
+}
+
+/**
+ * High Order Function
+ * @param {*} label 
+ * @returns 
+ */
+const oneFact = (label) => {
+    return (fact) => {
+        return `<div class='fact'>
+                    <h2 class='label'>${label}:</h2>
+                    <h2 class='detail'>${fact}</h2>
+                </div>`
+    } 
+}
+
+
 
 //render the webpage
 //not a pure function as it edits root

@@ -58,9 +58,10 @@ nav div {
 /**********************/
 
 #rover-page {
+  background-color: #fff;
   background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
+      rgba(255, 255, 255, 0.68),
+      rgba(255, 255, 255, 0.68)
     ),
     url(./../images/marsGround.jpg);
   background-repeat: no-repeat;
@@ -68,6 +69,12 @@ nav div {
   height: 100%;
   background-size: cover;
 }
+
+.section {
+  margin: 1rem 0 0 0;
+}
+
+/* heading section */
 
 .header-section {
   text-align: center;
@@ -78,7 +85,30 @@ nav div {
 }
 
 .header-title {
-  margin: 1rem 0;
+  /* margin: 1rem 0; */
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+/* fact section */
+
+#fact-section {
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.label {
+  color: red;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.detail {
   font-size: 3rem;
   font-weight: 500;
 }
