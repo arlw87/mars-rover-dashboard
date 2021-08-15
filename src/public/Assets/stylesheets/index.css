@@ -1,24 +1,13 @@
 @import "reset.css";
 
-* {
-}
+/**********************/
+/* Generic styling */
+/**********************/
 
 #root {
   height: 100vh;
   min-height: 748px;
   font-family: "Agency FB", arial;
-}
-
-#rover-page {
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url(./../images/marsGround.jpg);
-  background-repeat: no-repeat;
-  /* background-position: 50% 10%; */
-  height: 100%;
-  background-size: cover;
 }
 
 .page {
@@ -64,7 +53,39 @@ nav div {
   display: none;
 }
 
-/* text section */
+/**********************/
+/* Rover page styling */
+/**********************/
+
+#rover-page {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url(./../images/marsGround.jpg);
+  background-repeat: no-repeat;
+  /* background-position: 50% 10%; */
+  height: 100%;
+  background-size: cover;
+}
+
+.header-section {
+  text-align: center;
+}
+
+.header-image {
+  width: 90%;
+}
+
+.header-title {
+  margin: 1rem 0;
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+/**********************/
+/* Home page styling */
+/**********************/
 
 #announcement {
   margin: 4rem auto 0 auto;

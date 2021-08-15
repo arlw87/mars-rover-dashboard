@@ -45,8 +45,14 @@ const navColorStyling = (state) => {
 }
 
 const header = (state) => {
-    return `<h1>${state.get('rover')}</h1>
-            <img alt= 'image of a rover' src=''>`
+    return `<section class='header-section'>
+                <h1 class='header-title'>${state.get('rover')}</h1>
+                <img alt= 'image of a rover' src='${getRoverImage(state)}' class='header-image'>
+            </section>`
+}
+
+const getRoverImage = (state) => {
+    return `./Assets/images/${state.get('rover')}.jpg`
 }
 
 const navSection = (title) => {
