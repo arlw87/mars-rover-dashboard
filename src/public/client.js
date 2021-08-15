@@ -2,7 +2,12 @@
 const store = Immutable.Map({
     page: 'rover',
     rover: 'Spirit',
-    pageBackground: './Assets/images/marsGround.jpg'
+    pageBackground: './Assets/images/marsGround.jpg',
+    roverFacts: Immutable.Map({
+        launchDate: 'unknown',
+        landingDate: 'unknown2',
+        missionStatus: 'Complete'
+    })
 });
 
 //create commponents
@@ -17,16 +22,26 @@ const App = (state) => {
 }
 
 const menu = (state) => {
-    //determine nav text color
-    let colorClass = 'red';
-    if (state.get('page') !== 'rover'){
-        colorClass = 'grey';
-    } 
-    return `<nav class=${colorClass} >
+    return `<nav class=${navColorStyling(state)} >
     ${navSection('Home')}
     ${navSection('Mars')}
     ${navSection('info')}
     </nav>`
+}
+
+/**
+ * Determine the color of the nav menu. If on a rover page, color of text is red. 
+ * If on the home page color of text is grey
+ * @param {*} state 
+ * @returns 
+ */
+const navColorStyling = (state) => {
+    //determine nav text color
+    let colorClass = 'red';
+    if (state.get('page') !== 'rover'){
+        colorClass = 'grey';
+    }
+    return colorClass;
 }
 
 const header = (state) => {
