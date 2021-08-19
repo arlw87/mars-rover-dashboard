@@ -191,6 +191,14 @@ window.addEventListener('load', () => {
 
     const roverLinks = (rover) => {
         return (event) => {
+            //fetch data from server
+            postData('/dataRequest', {'rover':`${rover}`}).
+                then(result => {
+                    console.log(result.message);
+                }).catch((error) => {
+                    console.log(error);
+                });
+
             updateStore({'page':'rover', 'currentRover':`${rover}`}, store);
         }
     }
@@ -229,4 +237,26 @@ const updateUILinks = (newPage) => {
  //interacting with the page
  //Going to home page
 
+//request to server
+/**
+ * Send a post request in JSON format to the defined url and returns the parsed response
+ * @param {string} url 
+ * @param {object} data 
+ */
+ const postData = async(url, data) => {
 
+    const response = await fetch(url, {
+        method: 'POST',
+        headers:{
+            'content-type':'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    try{
+        const newData = await response.json();
+        return newData;
+    }catch(error){
+        return Error(error);
+    }
+}

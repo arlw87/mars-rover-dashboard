@@ -17,3 +17,13 @@ const listening = () => {
 }
 
 const server = app.listen(port, listening);
+
+//end points
+app.post('/dataRequest', (req, res) =>
+    {
+        console.log(req.body);
+        res.send({
+            status: 'good',
+            message: 'Hello from the server'
+        });
+    });
