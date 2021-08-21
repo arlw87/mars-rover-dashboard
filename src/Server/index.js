@@ -54,6 +54,7 @@ const extractManifestData = (res) => {
     return {
         name: data.name,
         landing_date: data.landing_date,
+        launch_date: data.launch_date,
         status: data.status
     }
 }

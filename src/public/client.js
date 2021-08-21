@@ -197,16 +197,13 @@ window.addEventListener('load', () => {
             postData('/dataRequest', {'rover':`${rover}`}).
                 then(result => {
                     //extract data from returned object
-                    const rover = result.payload.name;
-                    const landingDate = result.payload.landing_date;
-                    const status = result.payload.status;
-                    //how do i update one deep?
                     const newObj = {
                         'page':'rover',
-                        currentRover: rover,
+                        currentRover: result.payload.name,
                         roverFacts: {
-                            landingDate: landingDate,
-                            missionStatus: status
+                            landingDate: result.payload.landing_date,
+                            missionStatus: result.payload.status,
+                            launchDate: result.payload.launch_date
                         }
                     }
                     //update the page
