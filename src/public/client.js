@@ -8,7 +8,7 @@ let store = Immutable.Map({
         landingDate: '21/05/1998',
         missionStatus: 'Complete'
     }),
-    roverImages: Immutable.List(['marsGround', 'marsSpace', 'Opportunity', 'perservance', 'spirit']),
+    roverImages: Immutable.List([]),
     menuItems: Immutable.Map({
         homeLink: 'Home',
         marsLink: 'Mars',
@@ -111,6 +111,7 @@ const oneFact = (label) => {
 //image / gallery section
 const images = (state) => {
     const roverImagesArray = state.get('roverImages').toJS();
+    console.log(roverImagesArray);
     return `
         <section class='section'>
             ${roverImagesArray.map((val) => imageElement(val))}
@@ -119,7 +120,7 @@ const images = (state) => {
 }
 
 const imageElement = (image) => {
-    return `<img class ='galleryImage' src='./Assets/images/${image}.jpg'>`
+    return `<img class ='galleryImage' src='${image}'>`
 }
 
 //Home Page Components
@@ -187,15 +188,15 @@ window.addEventListener('load', () => {
     const curosityLink = document.getElementById('Curiosity');
     const spiritLink = document.getElementById('Spirit');
     const opportunityLink = document.getElementById('Opportunity');
-    const perservanceLink = document.getElementById('Perservance');
 
     const roverLinks = (rover) => {
         return (event) => {
             //fetch data from server
             //could set this to a separate function for neatness??
             //return an object with new data 
-            postData('/dataRequest', {'rover':`${rover}`}).
+            postData('/latest', {'rover':`${rover}`}).
                 then(result => {
+                    console.log(result);
                     //extract data from returned object
                     const newObj = {
                         'page':'rover',
@@ -206,6 +207,8 @@ window.addEventListener('load', () => {
                             launchDate: result.payload.launch_date
                         }
                     }
+                    //update images
+                    updateStoreImages(result.payload.images, store);
                     //update the page
                     updateStore(newObj, store);
                 }).catch((error) => {
@@ -244,12 +247,10 @@ window.addEventListener('load', () => {
     const curosityAction = roverLinks('Curiosity')
     const spiritAction = roverLinks('Spirit')
     const opportunityAction = roverLinks('Opportunity')
-    const perservanceAction = roverLinks('Perservance')
  
     curosityLink.addEventListener('click', curosityAction);
     spiritLink.addEventListener('click', spiritAction);
     opportunityLink.addEventListener('click', opportunityAction);
-    perservanceLink.addEventListener('click', perservanceAction);
  }
 
 //updating the application data and re-rendering
@@ -263,6 +264,10 @@ const updateStore = (newState, state) => {
         updateUILinks(newState['page'])
     }
 }
+
+const updateStoreImages = (images, state) => {
+    store = Immutable.set(state, 'roverImages', Immutable.List(images));
+} 
 
 const updateUILinks = (newPage) => {
     if (newPage === 'home'){
