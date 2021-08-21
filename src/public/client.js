@@ -196,7 +196,21 @@ window.addEventListener('load', () => {
             //return an object with new data 
             postData('/dataRequest', {'rover':`${rover}`}).
                 then(result => {
-                    console.log(result);
+                    //extract data from returned object
+                    const rover = result.payload.name;
+                    const landingDate = result.payload.landing_date;
+                    const status = result.payload.status;
+                    //how do i update one deep?
+                    const newObj = {
+                        'page':'rover',
+                        currentRover: rover,
+                        roverFacts: {
+                            landingDate: landingDate,
+                            missionStatus: status
+                        }
+                    }
+                    //update the page
+                    updateStore(newObj, store);
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -227,21 +241,6 @@ window.addEventListener('load', () => {
             //   flickr("cats").then((images)=> {
             //     $(document.body).html(images)
             //   })
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //update the page
-            updateStore({'page':'rover', 'currentRover':`${rover}`}, store);
         }
     }
 
@@ -258,7 +257,7 @@ window.addEventListener('load', () => {
 
 //updating the application data and re-rendering
 const updateStore = (newState, state) => {
-    store = state.merge(newState);
+    store = state.mergeDeep(newState);
     render(root, store);
 
     //if the update occurred because a new page was accessed then links 

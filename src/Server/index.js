@@ -24,21 +24,28 @@ const server = app.listen(port, listening);
 //end points
 app.post('/dataRequest', (req, res) =>
     {
-        console.log(req.body);
         let rover = req.body.rover;
-        //test communicating with nasa api
         const roverManifest = api_manifest(nasa_key, rover);
-        console.log(roverManifest);
-
-        fetchData(roverManifest, 'GET').
-            then((result) => 
-            {
-                const returnObject = extractManifestData(result)
-                console.log(returnObject);
-                res.send(returnObject);
-            }).
-            catch(error => console.log(error));
+        fetchManifestData(roverManifest).
+            then(result => {
+                res.send(
+                {
+                    status: 'succcess',
+                    payload: result
+                })}).
+            catch(error => res.send({status: 'error'}));
     });
+        
+const fetchManifestData = async (roverManifest) => {
+    return fetchData(roverManifest, 'GET').
+        then((result) => 
+        {
+            const returnObject = extractManifestData(result);
+            return returnObject;
+            
+        }).
+        catch(error => console.log(error));
+}
 
 const api_manifest = (api_key, rover) => `https://api.nasa.gov/mars-photos/api/v1/manifests/${rover}/?api_key=${api_key}`
 
