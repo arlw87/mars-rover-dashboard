@@ -113,7 +113,7 @@ const images = (state) => {
     const roverImagesArray = state.get('roverImages').toJS();
     console.log(roverImagesArray);
     return `
-        <section class='section'>
+        <section class='section' id='images>
             ${roverImagesArray.map((val) => imageElement(val))}
         </section>
     `

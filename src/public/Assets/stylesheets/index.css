@@ -274,6 +274,18 @@ nav {
     justify-self: flex-start;
   }
 
+  /* image section */
+
+  #images {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .galleryImage {
+    width: 30%;
+  }
+
   /* home page  */
   .rover-card {
     color: #ededed;
