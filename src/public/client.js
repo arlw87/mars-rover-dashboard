@@ -14,7 +14,7 @@ let store = Immutable.Map({
         marsLink: 'Mars',
         infoLink: 'Info'
     }),
-    rovers: Immutable.List(['Curosity','Spirit','Perservance','Opportunity'])
+    rovers: Immutable.List(['Curiosity','Spirit','Perservance','Opportunity'])
 });
 
 //create commponents
@@ -184,7 +184,7 @@ window.addEventListener('load', () => {
 
  const loadHomeRoverLinks = () => {
 
-    const curosityLink = document.getElementById('Curosity');
+    const curosityLink = document.getElementById('Curiosity');
     const spiritLink = document.getElementById('Spirit');
     const opportunityLink = document.getElementById('Opportunity');
     const perservanceLink = document.getElementById('Perservance');
@@ -192,18 +192,60 @@ window.addEventListener('load', () => {
     const roverLinks = (rover) => {
         return (event) => {
             //fetch data from server
+            //could set this to a separate function for neatness??
+            //return an object with new data 
             postData('/dataRequest', {'rover':`${rover}`}).
                 then(result => {
-                    console.log(result.message);
+                    console.log(result);
                 }).catch((error) => {
                     console.log(error);
                 });
+          
+            //e.g
+            // try{
+            //     newObj = await getRoverData(rover)
+            //     updateStore(newObj, store);
+            // } catch (error){
+            //     // throw error 
+            //     // dont update ui
+            //     // display an error to user
+            // }
 
+            //functional programming with a api call
+            // https://www.sitepoint.com/an-introduction-to-reasonably-pure-functional-programming/
+            // let flickr = (tags)=> {
+            //     let url = `http://api.flickr.com/services/feeds/photos_public.gne?tags=${tags}&format=json&jsoncallback=?`
+            //     return fetch(url)
+            //     .then((resp)=> resp.json())
+            //     .then((data)=> {
+            //       let urls = data.items.map((item)=> item.media.m )
+            //       let images = urls.map((url)=> $('<img />', { src: url }) )
+              
+            //       return images
+            //     })
+            //   }
+            //   flickr("cats").then((images)=> {
+            //     $(document.body).html(images)
+            //   })
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //update the page
             updateStore({'page':'rover', 'currentRover':`${rover}`}, store);
         }
     }
 
-    const curosityAction = roverLinks('Curosity')
+    const curosityAction = roverLinks('Curiosity')
     const spiritAction = roverLinks('Spirit')
     const opportunityAction = roverLinks('Opportunity')
     const perservanceAction = roverLinks('Perservance')
