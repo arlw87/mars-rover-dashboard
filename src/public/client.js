@@ -14,7 +14,7 @@ let store = Immutable.Map({
         marsLink: 'Mars',
         infoLink: 'Info'
     }),
-    rovers: Immutable.List(['Curiosity','Spirit','Perservance','Opportunity'])
+    rovers: Immutable.List(['Curiosity','Spirit','Opportunity'])
 });
 
 //create commponents

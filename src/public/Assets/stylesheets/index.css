@@ -182,15 +182,8 @@ nav {
   background-size: cover;
 }
 
-#Perservance {
-  background-image: url(./../images/perservance.jpg);
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: cover;
-}
-
-#Spirit {
-  background-image: url(./../images/spirit.jpg);
+#Curiosity {
+  background-image: url(./../images/curiosity.jpg);
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
@@ -289,7 +282,8 @@ nav {
     margin: 0 0 1px 0;
     height: 250px;
     font-size: 2rem;
-    width: 24%;
+    width: 32%;
+    max-width: 370px;
   }
 
   #rovers {
