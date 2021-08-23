@@ -182,17 +182,23 @@ const roverCard = (rover) => {
 
 //render the webpage
 //not a pure function as it edits root
+window.addEventListener('load', () => {
+    render(root, store);
+  })
+
 const render = (root, state) => {
     root.innerHTML = App(state);
     //sort out links here
     updateUILinks(state);
 }
 
-window.addEventListener('load', () => {
-    render(root, store)
-    //loadNavLinks();
-    updateUILinks(store);
-  })
+const updateUILinks = (state) => {
+    console.log(`hello from updateUILinks, page state is ${state.get('page')}`);
+    if (state.get('page') === 'home'){
+        loadHomeRoverLinks(state);
+    }
+    loadNavLinks(state);
+} 
 
  const loadNavLinks = (state) => {
     const list = state.get('menuItems').toJS();
@@ -204,73 +210,30 @@ window.addEventListener('load', () => {
      document.getElementById(`nav-section-${elementName}`).addEventListener('click', (event) => updateStore({'page':elementLink},store));
  }
 
- const loadHomeRoverLinks = () => {
+const roverAction = (rover) => {
+    return (event) => {
+        //fetch data from server
+        postData('/latest', {'rover':`${rover}`}).
+            then(result => {
+                //extract data from returned object
+                const newObj = {
+                    'page':'rover',
+                    currentRover: result.payload.name,
+                    roverFacts: Immutable.Map(result.payload.roverFacts)
+                }
+                //update images
+                updateStoreImages(result.payload.images, store);
+                //update the page
+                updateStore(newObj, store);
+            }).catch((error) => {
+                alert(error);
+            });
+        }}
 
-    console.log('hello from the rover links');
+const loadRoverLink = (element, callback) => document.getElementById(element).addEventListener('click', callback);
 
-    const curosityLink = document.getElementById('Curiosity');
-    const spiritLink = document.getElementById('Spirit');
-    const opportunityLink = document.getElementById('Opportunity');
+const loadHomeRoverLinks = (state) => state.get('rovers').toJS().forEach((elem) => loadRoverLink(elem, roverAction(elem)));
 
-    const roverLinks = (rover) => {
-        return (event) => {
-            //fetch data from server
-            //could set this to a separate function for neatness??
-            //return an object with new data 
-            postData('/latest', {'rover':`${rover}`}).
-                then(result => {
-                    console.log(result);
-                    //extract data from returned object
-                    const newObj = {
-                        'page':'rover',
-                        currentRover: result.payload.name,
-                        roverFacts: Immutable.Map(result.payload.roverFacts)
-                    }
-                    //update images
-                    updateStoreImages(result.payload.images, store);
-                    //update the page
-                    updateStore(newObj, store);
-                }).catch((error) => {
-                    console.log(error);
-                });
-          
-            //e.g
-            // try{
-            //     newObj = await getRoverData(rover)
-            //     updateStore(newObj, store);
-            // } catch (error){
-            //     // throw error 
-            //     // dont update ui
-            //     // display an error to user
-            // }
-
-            //functional programming with a api call
-            // https://www.sitepoint.com/an-introduction-to-reasonably-pure-functional-programming/
-            // let flickr = (tags)=> {
-            //     let url = `http://api.flickr.com/services/feeds/photos_public.gne?tags=${tags}&format=json&jsoncallback=?`
-            //     return fetch(url)
-            //     .then((resp)=> resp.json())
-            //     .then((data)=> {
-            //       let urls = data.items.map((item)=> item.media.m )
-            //       let images = urls.map((url)=> $('<img />', { src: url }) )
-              
-            //       return images
-            //     })
-            //   }
-            //   flickr("cats").then((images)=> {
-            //     $(document.body).html(images)
-            //   })
-        }
-    }
-
-    const curosityAction = roverLinks('Curiosity')
-    const spiritAction = roverLinks('Spirit')
-    const opportunityAction = roverLinks('Opportunity')
- 
-    curosityLink.addEventListener('click', curosityAction);
-    spiritLink.addEventListener('click', spiritAction);
-    opportunityLink.addEventListener('click', opportunityAction);
- }
 
 //updating the application data and re-rendering
 const updateStore = (newState, state) => {
@@ -281,15 +244,6 @@ const updateStore = (newState, state) => {
 const updateStoreImages = (images, state) => {
     store = Immutable.set(state, 'roverImages', Immutable.List(images));
 } 
-
-const updateUILinks = (state) => {
-    console.log(`hello from updateUILinks, page state is ${state.get('page')}`);
-    if (state.get('page') === 'home'){
-        loadHomeRoverLinks();
-    }
-    loadNavLinks(state);
-} 
-
 
  //interacting with the page
  //Going to home page
@@ -317,3 +271,64 @@ const updateUILinks = (state) => {
         return Error(error);
     }
 }
+
+
+
+// const loadHomeRoverLinks = () => {
+
+//     console.log('hello from the rover links');
+
+//     const curosityLink = document.getElementById('Curiosity');
+//     const spiritLink = document.getElementById('Spirit');
+//     const opportunityLink = document.getElementById('Opportunity');
+
+//     const roverLinks = (rover) => {
+//         return (event) => {
+//             //fetch data from server
+//             //could set this to a separate function for neatness??
+//             //return an object with new data 
+//             postData('/latest', {'rover':`${rover}`}).
+//                 then(result => {
+//                     console.log(result);
+//                     //extract data from returned object
+//                     const newObj = {
+//                         'page':'rover',
+//                         currentRover: result.payload.name,
+//                         roverFacts: Immutable.Map(result.payload.roverFacts)
+//                     }
+//                     //update images
+//                     updateStoreImages(result.payload.images, store);
+//                     //update the page
+//                     updateStore(newObj, store);
+//                 }).catch((error) => {
+//                     alert(error);
+//                 });
+          
+
+//             //functional programming with a api call
+//             // https://www.sitepoint.com/an-introduction-to-reasonably-pure-functional-programming/
+//             // let flickr = (tags)=> {
+//             //     let url = `http://api.flickr.com/services/feeds/photos_public.gne?tags=${tags}&format=json&jsoncallback=?`
+//             //     return fetch(url)
+//             //     .then((resp)=> resp.json())
+//             //     .then((data)=> {
+//             //       let urls = data.items.map((item)=> item.media.m )
+//             //       let images = urls.map((url)=> $('<img />', { src: url }) )
+              
+//             //       return images
+//             //     })
+//             //   }
+//             //   flickr("cats").then((images)=> {
+//             //     $(document.body).html(images)
+//             //   })
+//         }
+//     }
+
+//     const curosityAction = roverLinks('Curiosity')
+//     const spiritAction = roverLinks('Spirit')
+//     const opportunityAction = roverLinks('Opportunity')
+ 
+//     curosityLink.addEventListener('click', curosityAction);
+//     spiritLink.addEventListener('click', spiritAction);
+//     opportunityLink.addEventListener('click', opportunityAction);
+//  }
