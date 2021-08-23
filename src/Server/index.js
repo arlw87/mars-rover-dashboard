@@ -56,10 +56,15 @@ const extractLatestData = (res) => {
 
     return {
         name: data.name,
-        landing_date: data.landing_date,
-        launch_date: data.launch_date,
-        status: data.status,
-        images: images
+        images: images,
+        roverFacts: {
+            'Mission Status': data.status,
+            'Landing Date': data.landing_date,
+            'Launch Date': data.launch_date,
+            'Test': 'Hello'
+        }
+        
+        
     }
 }
 

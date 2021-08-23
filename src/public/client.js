@@ -2,25 +2,29 @@
 let store = Immutable.Map({
     page: 'home',
     currentRover: '',
-    roverFacts: Immutable.Map({
-        launchDate: '',
-        landingDate: '',
-        missionStatus: ''
-    }),
+    roverFacts: '',
     roverImages: Immutable.List([]),
-    menuItems: Immutable.Map({
-        homeLink: 'Home',
-        marsLink: 'Mars',
-        infoLink: 'Info'
-    }),
+    menuItems: Immutable.List([ 
+        Immutable.Map({   
+            name: 'Home',
+            link: 'home'
+        }),
+        Immutable.Map({   
+            name: 'Mars',
+            link: 'home'
+        }),
+        Immutable.Map({   
+            name: 'Info',
+            link: 'info'
+        })
+    ]),
     rovers: Immutable.List(['Curiosity','Spirit','Opportunity'])
 });
 
-//create commponents
 //find root node, non functional
 var root = document.getElementById('root');
 
-//functional
+//UI Components
 const App = (state) => {
     if (state.get('page') === 'rover'){
         return roverPage(state);
@@ -37,12 +41,25 @@ const roverPage = (state) => {
             </div>`
 }
 
+/**
+ * Multi sections of the UI is created from lists of items, e.g the menu and the facts section
+ * There a helper function was constructed for this. It takes in the list to convert into multiple
+ * components and the function that converts a list item into a component. 
+ * @param {*} list The list of items to turn in to components
+ * @param {*} fn The component function
+ * @returns block of html with all the components constructed from the list
+ */
+const multiUIfromList = (list, fn) => list.reduce((acc, cur) => `${acc} ${fn(cur)}`, '');
+
 /***
  * Menu section. Creates a menu element for all titles in the menuItems list in the application state
  */
 const menu = (state) => {
+    const menu = state.get('menuItems').toJS();
+    console.log(menu);
+    const menuItems = menu.map(val => val.name)
     return `<nav class=${navColorStyling(state)} >
-        ${state.get('menuItems').reduce((acc, cur) => `${acc} ${navSection(cur)}`,'')}
+        ${multiUIfromList(menuItems, navSection)}
     </nav>`
 }
 
@@ -78,34 +95,37 @@ const getRoverImage = (state) => {
     return `./Assets/images/${state.get('currentRover')}.jpg`
 }
 
-
-
 //Facts section
 const facts = (state) => {
-    const launch = oneFact('Launch Date');
-    const landing = oneFact('Landing Date');
-    const missionStatus = oneFact('Mission Status');
+    console.log(state);
+    console.log(state.get('roverFacts'))
     return `<div id='fact-section' class='section'>
-                ${launch(state.get('roverFacts').get('launchDate'))}
-                ${landing(state.get('roverFacts').get('landingDate'))}
-                ${missionStatus(state.get('roverFacts').get('missionStatus'))}
+    ${multiUIfromObject(state.get('roverFacts'),fact)}
             </div>`
 }
+
+ 
+const multiUIfromObject = (obj, fn) => {
+     const objJS = obj.toJS();
+     const objKeys = Object.keys(objJS);
+     const objVals = Object.values(objJS);
+     const newArray = objKeys.map((val, index) => [val, objVals[index]]);
+     return multiUIfromList(newArray, fact);
+ }
 
 /**
  * High Order Function
  * @param {*} label 
  * @returns 
  */
-const oneFact = (label) => {
-    return (fact) => {
+const fact = (info) => {
         return `<div class='fact'>
-                    <h2 class='label'>${label}:</h2>
+                    <h2 class='label'>${info[0]}:</h2>
                     <t>
-                    <h2 class='detail'>${fact}</h2>
+                    <h2 class='detail'>${info[1]}</h2>
                 </div>`
     } 
-}
+
 
 //image / gallery section
 const images = (state) => {
@@ -113,7 +133,7 @@ const images = (state) => {
     console.log(roverImagesArray);
     return `
         <section class='section' id='images>
-            ${roverImagesArray.map((val) => imageElement(val))}
+            ${multiUIfromList(roverImagesArray, imageElement)}
         </section>
     `
 }
@@ -149,7 +169,7 @@ const announcement = (state) => {
 const roverLinks = (state) => {
     const roversArray = state.get('rovers').toJS();     
     return `<section id='rovers'>
-    ${roversArray.reduce((acc, curr) => `${acc} ${roverCard(curr)}`,"")}
+        ${multiUIfromList(roversArray, roverCard)}
     </section>`
 }
 
@@ -164,25 +184,29 @@ const roverCard = (rover) => {
 //not a pure function as it edits root
 const render = (root, state) => {
     root.innerHTML = App(state);
+    //sort out links here
+    updateUILinks(state);
 }
 
 window.addEventListener('load', () => {
     render(root, store)
-    loadNavLinks();
-    loadHomeRoverLinks();
+    //loadNavLinks();
+    updateUILinks(store);
   })
 
- const loadNavLinks = () => {
-    let homeButton = document.getElementById(`nav-section-${store.get('menuItems').get('homeLink')}`);
+ const loadNavLinks = (state) => {
+    const list = state.get('menuItems').toJS();
+    list.forEach((element) => loadNavLink(element.name, element.link))
+ }
 
-    homeButton.addEventListener('click', (event) => {
-            //edit store so page indicates home 
-            updateStore({'page':'home'}, store);
-        }
-    )
+ const loadNavLink = (elementName, elementLink) => {
+     console.log(elementLink);
+     document.getElementById(`nav-section-${elementName}`).addEventListener('click', (event) => updateStore({'page':elementLink},store));
  }
 
  const loadHomeRoverLinks = () => {
+
+    console.log('hello from the rover links');
 
     const curosityLink = document.getElementById('Curiosity');
     const spiritLink = document.getElementById('Spirit');
@@ -200,11 +224,7 @@ window.addEventListener('load', () => {
                     const newObj = {
                         'page':'rover',
                         currentRover: result.payload.name,
-                        roverFacts: {
-                            landingDate: result.payload.landing_date,
-                            missionStatus: result.payload.status,
-                            launchDate: result.payload.launch_date
-                        }
+                        roverFacts: Immutable.Map(result.payload.roverFacts)
                     }
                     //update images
                     updateStoreImages(result.payload.images, store);
@@ -256,23 +276,18 @@ window.addEventListener('load', () => {
 const updateStore = (newState, state) => {
     store = state.mergeDeep(newState);
     render(root, store);
-
-    //if the update occurred because a new page was accessed then links 
-    //will need to be re-established
-    if ('page' in newState){
-        updateUILinks(newState['page'])
-    }
 }
 
 const updateStoreImages = (images, state) => {
     store = Immutable.set(state, 'roverImages', Immutable.List(images));
 } 
 
-const updateUILinks = (newPage) => {
-    if (newPage === 'home'){
+const updateUILinks = (state) => {
+    console.log(`hello from updateUILinks, page state is ${state.get('page')}`);
+    if (state.get('page') === 'home'){
         loadHomeRoverLinks();
     }
-    loadNavLinks();
+    loadNavLinks(state);
 } 
 
 
