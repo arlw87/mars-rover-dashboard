@@ -1,12 +1,11 @@
 //create a single global state object
 let store = Immutable.Map({
     page: 'home',
-    currentRover: 'Spirit',
-    pageBackground: './Assets/images/marsGround.jpg',
+    currentRover: '',
     roverFacts: Immutable.Map({
-        launchDate: '21/05/1998',
-        landingDate: '21/05/1998',
-        missionStatus: 'Complete'
+        launchDate: '',
+        landingDate: '',
+        missionStatus: ''
     }),
     roverImages: Immutable.List([]),
     menuItems: Immutable.Map({
@@ -21,12 +20,12 @@ let store = Immutable.Map({
 //find root node, non functional
 var root = document.getElementById('root');
 
+//functional
 const App = (state) => {
     if (state.get('page') === 'rover'){
         return roverPage(state);
     }
     return homePage(state);
-
 }
 
 const roverPage = (state) => {
@@ -38,13 +37,13 @@ const roverPage = (state) => {
             </div>`
 }
 
+/***
+ * Menu section. Creates a menu element for all titles in the menuItems list in the application state
+ */
 const menu = (state) => {
     return `<nav class=${navColorStyling(state)} >
-        ${navSection(state.get('menuItems').get('homeLink'))}
-        ${navSection(state.get('menuItems').get('marsLink'))}
-        ${navSection(state.get('menuItems').get('infoLink'))}
+        ${state.get('menuItems').reduce((acc, cur) => `${acc} ${navSection(cur)}`,'')}
     </nav>`
-
 }
 
 const navSection = (title) => {
