@@ -61,7 +61,6 @@ const extractLatestData = (res) => {
             'Mission Status': data.status,
             'Landing Date': data.landing_date,
             'Launch Date': data.launch_date,
-            'Test': 'Hello'
         }
         
         

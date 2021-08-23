@@ -12,6 +12,7 @@
 .page {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 nav {
@@ -28,6 +29,10 @@ nav {
 
 .red {
   color: red;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 #nav-section-Home {
@@ -280,6 +285,7 @@ nav {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 0 auto;
   }
 
   .galleryImage {
@@ -296,6 +302,11 @@ nav {
     font-size: 2rem;
     width: 32%;
     max-width: 370px;
+    cursor: pointer;
+  }
+
+  .rover-card:hover {
+    color: red;
   }
 
   #rovers {
