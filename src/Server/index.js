@@ -49,21 +49,21 @@ app.post('/latest', (req, res) =>
 const api_latest = (api_key, rover) => `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/latest_photos?api_key=${api_key}`
   
 const extractLatestData = (res) => {
-    const data = res.latest_photos[0].rover;
 
+    const data = res.latest_photos[0].rover;
+    const date = res.latest_photos[0].earth_date;
     //get the images
     const images = res.latest_photos.map(elem => elem.img_src)
 
     return {
         name: data.name,
         images: images,
+        imagesDate: date,
         roverFacts: {
             'Mission Status': data.status,
             'Landing Date': data.landing_date,
             'Launch Date': data.launch_date,
-        }
-        
-        
+        } 
     }
 }
 

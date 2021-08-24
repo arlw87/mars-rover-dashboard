@@ -141,7 +141,8 @@ const images = (state) => {
     const roverImagesArray = state.get('roverImages').toJS();
     console.log(roverImagesArray);
     return `
-        <section class='section' id='images>
+        <h1 class='header-title' id='image-title'>Images taken on ${state.get('imageDate')}</h1>
+        <section class='section' id='images'>
             ${multiUIfromList(roverImagesArray, imageElement)}
         </section>
     `
@@ -261,11 +262,12 @@ const roverAction = (rover) => {
         //fetch data from server
         postData('/latest', {'rover':`${rover}`}).
             then(result => {
-                //extract data from returned object
+                //extract data from returned 
                 const newObj = {
                     'page':'rover',
                     currentRover: result.payload.name,
-                    roverFacts: Immutable.Map(result.payload.roverFacts)
+                    roverFacts: Immutable.Map(result.payload.roverFacts),
+                    imageDate: result.payload.imagesDate
                 }
                 //update images
                 updateStoreImages(result.payload.images, store);
