@@ -235,6 +235,15 @@ nav {
   #nav-mobile {
     width: 10%;
   }
+
+  #rovers {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .rover-card {
+    width: 240px;
+  }
 }
 
 /* desktop */
