@@ -21,6 +21,7 @@ nav {
   justify-content: center;
   margin: 20px auto 0 auto;
   text-align: center;
+  flex-wrap: wrap;
 }
 
 .grey {
@@ -35,19 +36,48 @@ nav {
   cursor: pointer;
 }
 
-#nav-section-Home {
+.display {
+  display: block;
+}
+
+.non-display {
   display: none;
+}
+
+#nav-section-Home {
+  order: 3;
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 1vh 0;
+  border-width: 0 0 1px 0;
 }
 
 #nav-section-Mars {
-  font-size: 2.5rem;
   font-family: "Orbitron", sans-serif;
-  letter-spacing: 1rem;
-  width: 100%;
+  letter-spacing: 0.3rem;
+  width: 80%;
+  font-size: 2.5rem;
+  order: 1;
 }
 
 #nav-section-Info {
-  display: none;
+  order: 4;
+  width: 100%;
+  border-width: 0 0 1px 0;
+  font-size: 1.5rem;
+  padding: 1vh 0;
+}
+
+#nav-mobile {
+  font-size: 2.5rem;
+  order: 2;
+  width: 20%;
+}
+
+#nav-mobile img {
+  width: 50px;
+  margin: 12px 0 0 0;
+  text-align: end;
 }
 
 .nav-section {
@@ -195,6 +225,19 @@ nav {
 }
 
 /* Responsive Design */
+
+/* for tablet */
+@media (min-width: 767px) {
+  #nav-section-Mars {
+    width: 90%;
+  }
+
+  #nav-mobile {
+    width: 10%;
+  }
+}
+
+/* desktop */
 @media (min-width: 1024px) {
   .page {
     justify-content: space-around;
@@ -215,16 +258,26 @@ nav {
     flex-direction: column;
     justify-content: center;
     text-align: left;
+    order: 1;
+    border-width: 3px 0;
+  }
+
+  #nav-mobile {
+    font-size: 2.5rem;
+    order: 2;
+    width: 20%;
+    display: none;
   }
 
   #nav-section-Home h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 500;
   }
 
   #nav-section-Mars {
     font-size: 3.5rem;
     width: 80%;
+    order: 2;
   }
 
   #nav-section-Info {
@@ -233,10 +286,12 @@ nav {
     flex-direction: column;
     justify-content: center;
     text-align: right;
+    order: 3;
+    border-width: 3px 0;
   }
 
   #nav-section-Info h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 500;
   }
 

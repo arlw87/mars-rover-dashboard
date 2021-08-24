@@ -57,6 +57,7 @@ const menu = (state) => {
     const menuItems = menu.map(val => val.name)
     return `<nav class='${navColorStyling(state)}' >
         ${multiUIfromList(menuItems, navSection)}
+        <div class='nav-section' id='nav-mobile'><img src='./Assets/images/menu.png' alt='M'></div>
     </nav>`
 }
 
@@ -185,7 +186,39 @@ var root = document.getElementById('root');
 
 window.addEventListener('load', () => {
     render(root, store);
+    //mobile menu
+     
   })
+
+
+const mobileMenu = () => {
+    resetMobileMenu(); 
+    addMobileListener();  
+}
+
+const addMobileListener = () => {
+    document.getElementById('nav-mobile').addEventListener('click', toggleMobileMenu);
+}
+
+const toggleMobileMenu = (event) => {
+    document.getElementById('nav-section-Home').classList.toggle('display');
+    document.getElementById('nav-section-Home').classList.toggle('non-display');
+    document.getElementById('nav-section-Info').classList.toggle('display');
+    document.getElementById('nav-section-Info').classList.toggle('non-display')
+}
+
+const resetMobileMenu = () => {
+    if (document.getElementById('nav-section-Home').classList.contains('display')){
+        document.getElementById('nav-section-Home').classList.toggle('display');
+        document.getElementById('nav-section-Info').classList.toggle('display');
+    }
+
+    if (!document.getElementById('nav-section-Home').classList.contains('non-display')){
+        document.getElementById('nav-section-Home').classList.add('non-display');
+        document.getElementById('nav-section-Info').classList.add('non-display');
+    }
+}
+
 
 const render = (root, state) => {
     root.innerHTML = App(state);
@@ -199,6 +232,7 @@ const updateUILinks = (state) => {
         loadHomeRoverLinks(state);
     }
     loadNavLinks(state);
+    mobileMenu();
 } 
 
  const loadNavLinks = (state) => {
@@ -272,3 +306,4 @@ const updateStoreImages = (images, state) => {
         return Error(error);
     }
 }
+
