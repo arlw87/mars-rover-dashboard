@@ -57,8 +57,19 @@ const menu = (state) => {
     const menuItems = menu.map(val => val.name)
     return `<nav class='${navColorStyling(state)}' >
         ${multiUIfromList(menuItems, navSection)}
-        <div class='nav-section' id='nav-mobile'><img src='./Assets/images/menu.png' alt='M'></div>
+        ${mobileMenuComponent(state)}
     </nav>`
+}
+
+const mobileMenuComponent = (state) => {
+    let src = './Assets/images/menuGrey.png'
+    console.log(`for mobile menu: ${state.get('page')}`);
+    if (state.get('page') === 'rover'){
+        src = './Assets/images/menuRed.png'
+    }
+    return`
+            <div class='nav-section' id='nav-mobile'><img src=${src} alt='M'></div>
+        `
 }
 
 const navSection = (title) => {
