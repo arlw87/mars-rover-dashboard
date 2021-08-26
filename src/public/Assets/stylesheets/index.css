@@ -157,6 +157,7 @@ nav {
 .galleryImage {
   max-width: 100%;
   max-height: 40%;
+  min-width: 300px;
 }
 
 #image-title {
@@ -233,6 +234,11 @@ nav {
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
+}
+
+/* Info page styling */
+#acknowledgement{
+  color: white;
 }
 
 /* Responsive Design */

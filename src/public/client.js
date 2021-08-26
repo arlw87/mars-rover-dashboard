@@ -4,29 +4,34 @@ let store = Immutable.Map({
     currentRover: '',
     roverFacts: '',
     roverImages: Immutable.List([]),
-    menuItems: Immutable.List([ 
-        Immutable.Map({   
+    menuItems: Immutable.List([
+        Immutable.Map({
             name: 'Home',
             link: 'home'
         }),
-        Immutable.Map({   
+        Immutable.Map({
             name: 'Mars',
             link: 'home'
         }),
-        Immutable.Map({   
+        Immutable.Map({
             name: 'Info',
             link: 'info'
         })
     ]),
-    rovers: Immutable.List(['Curiosity','Spirit','Opportunity'])
+    rovers: Immutable.List(['Curiosity', 'Spirit', 'Opportunity'])
 });
 
 //UI Components
 const App = (state) => {
-    if (state.get('page') === 'rover'){
+    const page = state.get('page');
+
+    if (page === 'rover') {
         return roverPage(state);
+    } else if (page === 'info') {
+        return infoPage(state);
+    } else {
+        return homePage(state);
     }
-    return homePage(state);
 }
 
 const roverPage = (state) => {
@@ -64,10 +69,10 @@ const menu = (state) => {
 const mobileMenuComponent = (state) => {
     let src = './Assets/images/menuGrey.png'
     console.log(`for mobile menu: ${state.get('page')}`);
-    if (state.get('page') === 'rover'){
+    if (state.get('page') === 'rover') {
         src = './Assets/images/menuRed.png'
     }
-    return`
+    return `
             <div class='nav-section' id='nav-mobile'><img src=${src} alt='M'></div>
         `
 }
@@ -87,7 +92,7 @@ const navSection = (title) => {
 const navColorStyling = (state) => {
     //determine nav text color
     let colorClass = 'red';
-    if (state.get('page') !== 'rover'){
+    if (state.get('page') !== 'rover') {
         colorClass = 'grey';
     }
     return colorClass;
@@ -109,18 +114,18 @@ const facts = (state) => {
     console.log(state);
     console.log(state.get('roverFacts'))
     return `<div id='fact-section' class='section'>
-    ${multiUIfromObject(state.get('roverFacts'),fact)}
+    ${multiUIfromObject(state.get('roverFacts'), fact)}
             </div>`
 }
 
- 
+
 const multiUIfromObject = (obj, fn) => {
-     const objJS = obj.toJS();
-     const objKeys = Object.keys(objJS);
-     const objVals = Object.values(objJS);
-     const newArray = objKeys.map((val, index) => [val, objVals[index]]);
-     return multiUIfromList(newArray, fact);
- }
+    const objJS = obj.toJS();
+    const objKeys = Object.keys(objJS);
+    const objVals = Object.values(objJS);
+    const newArray = objKeys.map((val, index) => [val, objVals[index]]);
+    return multiUIfromList(newArray, fact);
+}
 
 /**
  * High Order Function
@@ -128,12 +133,12 @@ const multiUIfromObject = (obj, fn) => {
  * @returns 
  */
 const fact = (info) => {
-        return `<div class='fact'>
+    return `<div class='fact'>
                     <h2 class='label'>${info[0]}:</h2>
                     <t>
                     <h2 class='detail'>${info[1]}</h2>
                 </div>`
-    } 
+}
 
 
 //image / gallery section
@@ -151,6 +156,31 @@ const images = (state) => {
 const imageElement = (image) => {
     return `<img class ='galleryImage' src='${image}'>`
 }
+
+//info page
+const infoPage = (state) => {
+    return `<div id="home-page" class="page">
+        ${menu(state)}
+        ${infoHeader(state)}
+        ${acknowledgements(state)}
+    </div>`
+}
+
+const acknowledgements = (state) => {
+    return `<section class='section' id="acknowledgement">
+        <p>Mars Rover Dashboard uses Nasa's excellent open API around <a href='https://api.nasa.gov/'>here</a>. In particular the Mars Rover API which "is designed to collect image data gathered by NASA's Curiosity, Opportunity, and Spirit rovers on Mars and make it more easily available to other developers, educators, and citizen scientists." The API is maintenced by <a href='https://github.com/chrisccerami/mars-photo-api'>Chris Cerami</a></p>
+        <p>The images used in the background of this web app and the images of the rover are all taken from Nasa's website</p>
+        <p>Somewhere, Something incredible is waiting to be known - Carl Sagan</p>
+    </section>`
+}
+
+const infoHeader = (state) => {
+    return `<section class='header-section section'>
+                <img alt= 'Nasa Logo' src='./Assets/images/nasa-logo-web-rgb.png' class='header-image'>
+                <h1 class='header-title'>Information</h1>
+            </section>`
+}
+
 
 //Home Page Components
 const homePage = (state) => {
@@ -177,7 +207,7 @@ const announcement = (state) => {
  * @returns 
  */
 const roverLinks = (state) => {
-    const roversArray = state.get('rovers').toJS();     
+    const roversArray = state.get('rovers').toJS();
     return `<section id='rovers'>
         ${multiUIfromList(roversArray, roverCard)}
     </section>`
@@ -199,13 +229,13 @@ var root = document.getElementById('root');
 window.addEventListener('load', () => {
     render(root, store);
     //mobile menu
-     
-  })
+
+})
 
 
 const mobileMenu = () => {
-    resetMobileMenu(); 
-    addMobileListener();  
+    resetMobileMenu();
+    addMobileListener();
 }
 
 const addMobileListener = () => {
@@ -220,12 +250,12 @@ const toggleMobileMenu = (event) => {
 }
 
 const resetMobileMenu = () => {
-    if (document.getElementById('nav-section-Home').classList.contains('display')){
+    if (document.getElementById('nav-section-Home').classList.contains('display')) {
         document.getElementById('nav-section-Home').classList.toggle('display');
         document.getElementById('nav-section-Info').classList.toggle('display');
     }
 
-    if (!document.getElementById('nav-section-Home').classList.contains('non-display')){
+    if (!document.getElementById('nav-section-Home').classList.contains('non-display')) {
         document.getElementById('nav-section-Home').classList.add('non-display');
         document.getElementById('nav-section-Info').classList.add('non-display');
     }
@@ -240,31 +270,30 @@ const render = (root, state) => {
 
 const updateUILinks = (state) => {
     console.log(`hello from updateUILinks, page state is ${state.get('page')}`);
-    if (state.get('page') === 'home'){
+    if (state.get('page') === 'home') {
         loadHomeRoverLinks(state);
     }
     loadNavLinks(state);
     mobileMenu();
-} 
+}
 
- const loadNavLinks = (state) => {
+const loadNavLinks = (state) => {
     const list = state.get('menuItems').toJS();
     list.forEach((element) => loadNavLink(element.name, element.link))
- }
+}
 
- const loadNavLink = (elementName, elementLink) => {
-     console.log(elementLink);
-     document.getElementById(`nav-section-${elementName}`).addEventListener('click', (event) => updateStore({'page':elementLink},store));
- }
+const loadNavLink = (elementName, elementLink) => {
+    document.getElementById(`nav-section-${elementName}`).addEventListener('click', (event) => updateStore({ 'page': elementLink }, store));
+}
 
 const roverAction = (rover) => {
     return (event) => {
         //fetch data from server
-        postData('/latest', {'rover':`${rover}`}).
+        postData('/latest', { 'rover': `${rover}` }).
             then(result => {
                 //extract data from returned 
                 const newObj = {
-                    'page':'rover',
+                    'page': 'rover',
                     currentRover: result.payload.name,
                     roverFacts: Immutable.Map(result.payload.roverFacts),
                     imageDate: result.payload.imagesDate
@@ -276,7 +305,8 @@ const roverAction = (rover) => {
             }).catch((error) => {
                 alert(error);
             });
-        }}
+    }
+}
 
 const loadRoverLink = (element, callback) => document.getElementById(element).addEventListener('click', callback);
 
@@ -291,10 +321,10 @@ const updateStore = (newState, state) => {
 
 const updateStoreImages = (images, state) => {
     store = Immutable.set(state, 'roverImages', Immutable.List(images));
-} 
+}
 
- //interacting with the page
- //Going to home page
+//interacting with the page
+//Going to home page
 
 //request to server
 /**
@@ -302,20 +332,20 @@ const updateStoreImages = (images, state) => {
  * @param {string} url 
  * @param {object} data 
  */
- const postData = async(url, data) => {
+const postData = async (url, data) => {
 
     const response = await fetch(url, {
         method: 'POST',
-        headers:{
-            'content-type':'application/json'
+        headers: {
+            'content-type': 'application/json'
         },
         body: JSON.stringify(data)
     });
 
-    try{
+    try {
         const newData = await response.json();
         return newData;
-    }catch(error){
+    } catch (error) {
         return Error(error);
     }
 }
