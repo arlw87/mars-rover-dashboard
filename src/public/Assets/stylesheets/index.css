@@ -120,7 +120,7 @@ nav {
 }
 
 .header-image {
-  width: 90%;
+  max-width: 300px;
 }
 
 .header-title {
@@ -239,6 +239,16 @@ nav {
 /* Info page styling */
 #acknowledgement{
   color: white;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#acknowledgement p{
+  margin: 1rem 0;
+}
+
+#info-header{
+  color: #fff;
 }
 
 /* Responsive Design */
@@ -265,8 +275,15 @@ nav {
 
 /* desktop */
 @media (min-width: 1024px) {
+
+  /*general*/
+  .section{
+    max-width: 1200px;
+    margin: 2rem auto 0 auto;
+  }
+
   .page {
-    justify-content: space-around;
+    justify-content: flex-start;
   }
 
   /*rover page*/
@@ -328,7 +345,6 @@ nav {
   }
 
   .header-image {
-    width: 50%;
     max-width: 500px;
   }
 
@@ -336,10 +352,6 @@ nav {
     font-size: 4.5rem;
     font-weight: 500;
     text-align: center;
-  }
-
-  .section {
-    margin: 0 0 0 0;
   }
 
   /* fact section */
@@ -397,4 +409,11 @@ nav {
     width: 90%;
     justify-content: center;
   }
+
+  /*Info page*/
+  #acknowledgement{
+    font-size: 1.5rem;
+  }
+
+
 }

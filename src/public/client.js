@@ -170,14 +170,14 @@ const acknowledgements = (state) => {
     return `<section class='section' id="acknowledgement">
         <p>Mars Rover Dashboard uses Nasa's excellent open API around <a href='https://api.nasa.gov/'>here</a>. In particular the Mars Rover API which "is designed to collect image data gathered by NASA's Curiosity, Opportunity, and Spirit rovers on Mars and make it more easily available to other developers, educators, and citizen scientists." The API is maintenced by <a href='https://github.com/chrisccerami/mars-photo-api'>Chris Cerami</a></p>
         <p>The images used in the background of this web app and the images of the rover are all taken from Nasa's website</p>
-        <p>Somewhere, Something incredible is waiting to be known - Carl Sagan</p>
+        <blockquote>"Somewhere, Something incredible is waiting to be known" - <em>Carl Sagan</em></blockquote>
     </section>`
 }
 
 const infoHeader = (state) => {
     return `<section class='header-section section'>
                 <img alt= 'Nasa Logo' src='./Assets/images/nasa-logo-web-rgb.png' class='header-image'>
-                <h1 class='header-title'>Information</h1>
+                <h1 class='header-title' id='info-header'>Information</h1>
             </section>`
 }
 
