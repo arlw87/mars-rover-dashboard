@@ -131,9 +131,6 @@ nav {
 
 /* fact section */
 
-#fact-section {
-}
-
 .fact {
   display: flex;
   flex-direction: column;
@@ -158,11 +155,23 @@ nav {
   max-width: 100%;
   max-height: 40%;
   min-width: 300px;
+  margin: 0 auto 1vh auto;
+  border: 2px #000 solid;
 }
 
 #image-title {
   font-size: 3.5rem;
   margin: 1rem;
+  text-align: center;
+}
+
+#images{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 95%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 /**********************/
@@ -376,14 +385,18 @@ nav {
   /* image section */
 
   #images {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(300px, auto);
+    gap: 1vw 1vh;
+    margin: 0 auto 1vh auto;
   }
 
   .galleryImage {
-    width: 30%;
+    max-width: 100%;
+    max-height: none;
+    place-self: center;
+    margin: 0;
   }
 
   /* home page  */
@@ -400,7 +413,7 @@ nav {
   }
 
   .rover-card:hover {
-    color: red;
+    transform: scale(1.1);
   }
 
   #rovers {
