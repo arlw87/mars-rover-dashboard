@@ -40,6 +40,7 @@ const roverPage = (state) => {
                 ${header(state)}
                 ${facts(state)}
                 ${images(state)}
+                ${footer(state)}
             </div>`
 }
 
@@ -163,6 +164,7 @@ const infoPage = (state) => {
         ${menu(state)}
         ${infoHeader(state)}
         ${acknowledgements(state)}
+        ${footer(state)}
     </div>`
 }
 
@@ -188,6 +190,7 @@ const homePage = (state) => {
                 ${menu(state)}
                 ${announcement(state)}
                 ${roverLinks(state)}
+                ${footer(state)}
             </div>`
 }
 
@@ -196,6 +199,20 @@ const announcement = (state) => {
                 <p id="mars-statement">The red planet has been explored by robots for decades</p>
                 <p id="mars-question">Want to find out more?</p>
             </section>`
+}
+
+const footer = (state) => {
+    return `<section id='footer' class='section ${footerStyling(state)}'>
+        <h2>Developed by Andrew White</h2>
+    </section>`
+}
+
+const footerStyling = (state) => {
+    let colorClass = 'redBackground';
+    if (state.get('page') !== 'rover') {
+        colorClass = 'greyBackground';
+    }
+    return colorClass;
 }
 
 /**
@@ -208,9 +225,9 @@ const announcement = (state) => {
  */
 const roverLinks = (state) => {
     const roversArray = state.get('rovers').toJS();
-    return `<section id='rovers'>
+    return `<section id = 'rovers' >
         ${multiUIfromList(roversArray, roverCard)}
-    </section>`
+    </section > `
 }
 
 const roverCard = (rover) => {
@@ -269,7 +286,7 @@ const render = (root, state) => {
 }
 
 const updateUILinks = (state) => {
-    console.log(`hello from updateUILinks, page state is ${state.get('page')}`);
+    console.log(`hello from updateUILinks, page state is ${state.get('page')} `);
     if (state.get('page') === 'home') {
         loadHomeRoverLinks(state);
     }
