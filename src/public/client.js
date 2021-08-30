@@ -59,7 +59,6 @@ const multiUIfromList = (list, fn) => list.reduce((acc, cur) => `${acc} ${fn(cur
  */
 const menu = (state) => {
     const menu = state.get('menuItems').toJS();
-    console.log(menu);
     const menuItems = menu.map(val => val.name)
     return `<nav class='${navColorStyling(state)}' >
         ${multiUIfromList(menuItems, navSection)}
@@ -69,7 +68,6 @@ const menu = (state) => {
 
 const mobileMenuComponent = (state) => {
     let src = './Assets/images/menuGrey.png'
-    console.log(`for mobile menu: ${state.get('page')}`);
     if (state.get('page') === 'rover') {
         src = './Assets/images/menuRed.png'
     }
@@ -112,8 +110,6 @@ const getRoverImage = (state) => {
 
 //Facts section
 const facts = (state) => {
-    console.log(state);
-    console.log(state.get('roverFacts'))
     return `<div id='fact-section' class='section'>
     ${multiUIfromObject(state.get('roverFacts'), fact)}
             </div>`
@@ -145,7 +141,7 @@ const fact = (info) => {
 //image / gallery section
 const images = (state) => {
     const roverImagesArray = state.get('roverImages').toJS();
-    console.log(roverImagesArray);
+
     return `
         <h1 class='header-title' id='image-title'>Images taken on ${state.get('imageDate')}</h1>
         <section class='section' id='images'>
@@ -286,7 +282,6 @@ const render = (root, state) => {
 }
 
 const updateUILinks = (state) => {
-    console.log(`hello from updateUILinks, page state is ${state.get('page')} `);
     if (state.get('page') === 'home') {
         loadHomeRoverLinks(state);
     }

@@ -55,6 +55,7 @@ The client.js uses a fetch to communicate with the Express server to request rov
 The front end is styled in a responsive manner and works on devices from mobiles up to desktop computers. When in mobile mode the menu system changes to a compact form where clicking a mobile menu button will display the home and info menu options.
 
 ![Front End Mobile Demo](./gifs/mars-dashboar-mobile.gif)
+
 _Mobile Interface of Mars rover dashboard_
 
 ### Back End
