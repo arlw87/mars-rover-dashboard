@@ -1,5 +1,8 @@
 # Mars Rover Dashboard
 
+![Front End Demo](./gifs/mars-dashboard.gif)
+_Front End Operation of Mars rover dashboard_
+
 ## Description
 
 The Mars rover dashboard application displays information of and the latest images from three Nasa rovers, Spirit, Opportunity and Curiosity, that have / are exploring the Martian surface. 
@@ -50,6 +53,9 @@ The client.js uses a fetch to communicate with the Express server to request rov
 
 ### Responsive design
 The front end is styled in a responsive manner and works on devices from mobiles up to desktop computers. When in mobile mode the menu system changes to a compact form where clicking a mobile menu button will display the home and info menu options.
+
+![Front End Demo](./gifs/mars-dashboard-mobile.gif)
+_Mobile Interface of Mars rover dashboard_
 
 ### Back End
 
