@@ -34,12 +34,14 @@ nav {
   border-color: red;
 }
 
-.greyBackground{
+.greyBackground {
   background-color: #c4c4c4;
+  color: #000;
 }
 
-.redBackground{
+.redBackground {
   background-color: red;
+  color: #fff;
 }
 
 .pointer {
@@ -96,13 +98,12 @@ nav {
   /* border-color: #c4c4c4; */
 }
 
-#footer{
+#footer {
   width: 100vw;
   margin: auto 0 0 0;
   text-align: center;
   padding: 1vh 0;
   max-width: none;
-  color: #fff;
 }
 
 /**********************/
@@ -182,7 +183,7 @@ nav {
   text-align: center;
 }
 
-#images{
+#images {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -263,17 +264,17 @@ nav {
 }
 
 /* Info page styling */
-#acknowledgement{
+#acknowledgement {
   color: white;
   width: 90%;
   margin: 0 auto;
 }
 
-#acknowledgement p{
+#acknowledgement p {
   margin: 1rem 0;
 }
 
-#info-header{
+#info-header {
   color: #fff;
 }
 
@@ -301,16 +302,14 @@ nav {
 
 /* desktop */
 @media (min-width: 1024px) {
-
   /*general*/
-  .section{
+  .section {
     max-width: 1200px;
     margin: 2rem auto 0 auto;
   }
 
   .page {
     justify-content: flex-start;
-
   }
 
   /*rover page*/
@@ -442,9 +441,7 @@ nav {
   }
 
   /*Info page*/
-  #acknowledgement{
+  #acknowledgement {
     font-size: 1.5rem;
   }
-
-
 }
